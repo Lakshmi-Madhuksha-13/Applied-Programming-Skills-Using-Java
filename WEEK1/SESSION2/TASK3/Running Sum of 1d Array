@@ -1,0 +1,34 @@
+import java.util.HashMap;
+
+class Solution {
+    public int[] runningSum(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int sum = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            sum = sum + nums[i];
+            map.put(i, sum);
+        }
+
+        int[] result = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            result[i] = map.get(i);
+        }
+
+        return result;
+    }
+    /*class Solution {
+    public int[] runningSum(int[] nums) {
+        int[] result = new int[nums.length];
+        int sum = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            result[i] = sum;
+        }
+
+        return result;
+    }
+}*/
+
+}

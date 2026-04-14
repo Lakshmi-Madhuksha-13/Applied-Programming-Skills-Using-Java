@@ -1,0 +1,34 @@
+import java.util.*;
+
+class Solution {
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        List<int[]> nodeList = new ArrayList<>();
+        
+        dfs(root, 0, 0, nodeList);
+        
+        // ✅ Correct sorting: col → row → value
+        Collections.sort(nodeList, (a, b) -> {
+            if (a[0] != b[0]) return a[0] - b[0]; // col
+            if (a[1] != b[1]) return a[1] - b[1]; // row
+            return a[2] - b[2];                   // value
+        });
+
+        TreeMap<Integer, List<Integer>> map = new TreeMap<>();
+        
+        for (int[] node : nodeList) {
+            map.putIfAbsent(node[0], new ArrayList<>());
+            map.get(node[0]).add(node[2]);
+        }
+        
+        return new ArrayList<>(map.values());
+    }
+
+    private void dfs(TreeNode node, int row, int col, List<int[]> list) {
+        if (node == null) return;
+
+        list.add(new int[]{col, row, node.val});
+
+        dfs(node.left, row + 1, col - 1, list);
+        dfs(node.right, row + 1, col + 1, list);
+    }
+}
